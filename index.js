@@ -1,18 +1,18 @@
 const express = require('express');
-const world = require('forthright48/world');
+const config = require('config');
 const path = require('path');
 
 const app = express();
 const server = require('http').createServer(app);
-const rootPath = world.rootPath;
+const rootPath = config.rootPath;
 
-app.set('port', 80);
+app.set('port', 3000);
 app.set('view engine', 'pug');
 app.set('views', path.join(rootPath, './views'));
 
 app.use('/public', express.static(path.join(rootPath, '/public')));
 
-app.use(function(err, req, res) {
+app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
@@ -28,6 +28,6 @@ if (require.main === module) {
 } else {
   module.exports = {
     server,
-    app
+    app,
   };
 }
