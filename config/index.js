@@ -1,4 +1,9 @@
+const path = require('path');
+const {secret, port, dburl} = require('../secret/config.js');
+
 module.exports = {
-  rootPath: __dirname,
-  port: 8005,
+  rootPath: path.join(__dirname, '../'),
+  port,
+  secret,
+  dburl,
 };

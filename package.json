@@ -26,8 +26,13 @@
   },
   "private": true,
   "dependencies": {
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.0",
+    "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
+    "express-session": "^1.15.6",
     "gulp-css-url-to-absolute": "^1.0.1",
+    "mongoose": "^4.13.0",
     "pug": "^2.0.0-beta3"
   },
   "devDependencies": {

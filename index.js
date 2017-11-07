@@ -12,13 +12,21 @@ app.set('views', path.join(rootPath, './views'));
 
 app.use('/public', express.static(path.join(rootPath, '/public')));
 
+/** Configuration */
+require('./config/database');
+require('./config/session').addSession(app);
+app.use(require('connect-flash')());
+
+/* Middleware*/
+app.use(require('./middlewares/flash.js'));
+
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
 
 app.get('*', function(req, res) {
-  return res.status(404).send('Page not found\n');
+  return res.status(404).render('404');
 });
 
 if (require.main === module) {

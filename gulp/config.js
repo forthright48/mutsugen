@@ -28,4 +28,5 @@ module.exports = {
     all: [],
   },
   browserifyPath: ['./node_modules', './src'],
+  port: require('config').port,
 };

@@ -63,7 +63,7 @@ module.exports = function(gulp) {
   }
 
   gulp.task('script', function(done) {
-    const filePathArray = glob.sync('./src/js/**/*.js');
+    const filePathArray = glob.sync('./src/js/**.js');
     filePathArray.forEach(function(filePath) {
       let destPath = path.relative(path.join(rootPath, 'src'), filePath);
       destPath = path.join('./public', destPath);
