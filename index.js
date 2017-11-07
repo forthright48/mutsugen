@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('config');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -12,30 +13,31 @@ app.set('views', path.join(rootPath, './views'));
 
 app.use('/public', express.static(path.join(rootPath, '/public')));
 
-/** Configuration */
+/** Database **/
 require('./config/database');
+
+/** Configuration */
 require('./config/session').addSession(app);
 app.use(require('connect-flash')());
+app.use(bodyParser.json({limit: '100kb'})); // support json encoded bodies
+app.use(bodyParser.urlencoded({
+  extended: true,
+  limit: '100kb',
+})); // support encoded bodies
 
 /* Middleware*/
 app.use(require('./middlewares/flash.js'));
 
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
+  console.error(err);
+  req.flash('error', 'Some error occured');
+  return res.redirect('/');
 });
 
 app.get('*', function(req, res) {
   return res.status(404).render('404');
 });
 
-if (require.main === module) {
-  server.listen(app.get('port'), function() {
-    console.log(`Server running at port ${app.get('port')}`);
-  });
-} else {
-  module.exports = {
-    server,
-    app,
-  };
-}
+server.listen(app.get('port'), function() {
+  console.log(`Server running at port ${app.get('port')}`);
+});

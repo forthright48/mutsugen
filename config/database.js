@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 const dburl = require('config').dburl;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(dburl, function(err) {
-  if (err) console.log(err);
-  else console.log('Successfully connected to database');
+const promise = mongoose.connect(dburl, {
+  useMongoClient: true,
+});
+
+promise.then(function(db) {
+  console.log('Successfully connected to database');
+}).catch(function(err) {
+  console.log(err);
 });
