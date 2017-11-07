@@ -6,7 +6,7 @@ const app = express();
 const server = require('http').createServer(app);
 const rootPath = config.rootPath;
 
-app.set('port', 3000);
+app.set('port', config.port);
 app.set('view engine', 'pug');
 app.set('views', path.join(rootPath, './views'));
 
